@@ -1,58 +1,47 @@
-#include<iostream>
-
+#include <iostream>
+#include<algorithm>
 using namespace std;
-
-void swap(int *a,int *b)
+int partition(long long int *a,int s,int e)
 {
-	int temp=*a;
-	*a=*b;
-	*b=temp;
+    int i=s-1;
+    int j=s;
+    int pivot=a[e];
+    for(;j<=e-1;)
+    {
+        if(a[j]<=pivot)
+        {
+            i=i+1;
+            swap(a[i],a[j]);
+        }
+        j=j+1;
+    }
+    swap(a[i+1],a[e]);
+    return i+1;
+    
 }
-
-int partition(int a[],int l,int r)
+void quicksort(long long int *arr,int s,int e)
 {
-	int p=a[r];
-	int ix=(l-1);
-
-	for(int j=l;j<r;j++)
-	{
-		if(a[j]<=p)
-		{
-			ix++;
-			swap(&a[ix],&a[j]);
-		}
-	}
-	swap(a[ix+1],a[r]);
-	return (ix+1);
+    if(s>=e)
+    {
+        return;
+    }
+    int p=partition(arr, s,e);
+    quicksort(arr,s,p-1);
+    quicksort(arr,p+1,e);
 }
-void quicksort(int a[],int l,int r)
+int main(int argc, char **argv)
 {
-	if(l<r)
-	{
-	int p=partition(a,l,r);
-	quicksort(a,l,p-1);
-	quicksort(a,p+1,r);
-
-	}
-}
-
-
-void print(int a[],int sizeofarray)
-{
-	for(int i=0;i<sizeofarray;i++)
-	{
-		cout<<a[i]<<endl;
-	}
-}
-
-int main()
-{
-	int a[]={4,3,2,1};
-
-	int n=sizeof(a)/sizeof(a[0]);
-	//swap(&a[2],&a[5]);
-	quicksort(a,0,n-1);
-	print(a,n);
+	long long int n;
+    cin>>n;
+    long long int arr[n];
+    for(int i=0;i<n;i++)
+    {
+        cin>>arr[i];
+    }
+    quicksort(arr,0,n-1);
+    for(int i=0;i<n;i++)
+    {
+        cout<<arr[i]<<" ";
+    }
 	return 0;
-
 }

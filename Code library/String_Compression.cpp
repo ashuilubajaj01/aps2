@@ -1,34 +1,37 @@
-string compress(string str) 
+#include <iostream>
+#include<cstring>
+using namespace std;
+void remove_dup(char str[])
 {
-    string out;
-    int n=str.length();
-    //cout<<n<<endl;
-    if(n==0)
-        return out;
-    
-    char current=str[0]; 
-    
-    int count=1; 
-    int i=1;
-    
-    while(i <= n)
+    int c=1;
+    int m=strlen(str);
+    int i;
+    int j=0;
+    if(m==1 || m==0)
     {
-        while(str[i]==current && i<n)
+        return;
+    }
+    for(int i=1;i<=m;i++)
+    {
+        if(str[i]==str[j])
         {
-            count++;
-            i++;    
+            c++;
         }
+        else if(str[i]!=str[j])
+        {
+            cout<<str[j]<<c;
+            j=i;
+            c=1;
+        }
+    }
         
-        if(count>1)
-            out=out+current+to_string(count);
-        else
-            out=out+current;
-        
-        current=str[i]; 
-        count=1;
-        i++;
-    }    
-    return out;
+    
 }
 
-
+int main()
+{
+	char str[1000];
+    cin.getline(str,1000);
+    remove_dup(str);
+	return 0;
+}
